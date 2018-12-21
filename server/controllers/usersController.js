@@ -11,12 +11,24 @@ function create(req, res) {
             res.json({ message: error });
         }
 
-        res.json({ message: `Inserted ID: ${results.insertId}`});
+        res.json({ message: `Inserted ID: ${results.insertId}` });
     });
 }
 
 function selectAll(req, res) {
     connection.query('SELECT * FROM users', function (error, results, fields) {
+        if (error) {
+            res.json({ message: error });
+        }
+
+        res.json(results);
+    })
+}
+
+function selectOne(req, res) {
+    connection.query('SELECT * FROM users WHERE user_id = ?', [
+        req.params.user_id
+    ], function (error, results, fields) {
         if (error) {
             res.json({ message: error });
         }
@@ -51,4 +63,4 @@ function deleteOne(req, res) {
     });
 }
 
-module.exports = { create, selectAll, update, deleteOne };
+module.exports = { create, selectAll, update, deleteOne, selectOne };
