@@ -14,6 +14,22 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 
 /**
+ * CREATE Operation
+ */
+app.post('/users', function (req, res) {
+
+    console.log(req.body);
+
+    connection.query('INSERT INTO users (first_name, last_name) VALUES(?,?)', ['John', 'Doe'], function (error, results, fields) {
+        if (error) {
+            res.json({ message: error });
+        }
+
+        res.json({ message: `Inserted ID: ${results.insertId}`});
+    });
+});
+
+/**
  * READ Operation
  */
 app.get('/users', function (req, res) {
