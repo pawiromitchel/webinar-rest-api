@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 const databaseConfig = require('../config/config');
-const connection = mysql.createConnection(databaseConfig);
+const connection = mysql.createConnection(databaseConfig[process.env.ENVIRONMENT]);
 
 function create(req, res) {
     connection.query('INSERT INTO users (first_name, last_name) VALUES(?,?)', [
