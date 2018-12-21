@@ -17,10 +17,10 @@ app.use(bodyParser.json());
  * CREATE Operation
  */
 app.post('/users', function (req, res) {
-
-    console.log(req.body);
-
-    connection.query('INSERT INTO users (first_name, last_name) VALUES(?,?)', ['John', 'Doe'], function (error, results, fields) {
+    connection.query('INSERT INTO users (first_name, last_name) VALUES(?,?)', [
+        req.body.first_name,
+        req.body.last_name
+    ], function (error, results, fields) {
         if (error) {
             res.json({ message: error });
         }
@@ -42,10 +42,38 @@ app.get('/users', function (req, res) {
     })
 });
 
-app.get('/hello', function (req, res) {
-    // database
+/**
+ * UPDATE Operation
+ */
 
-    res.json({ message: "Hi" });
+app.patch('/users', function (req, res) {
+    connection.query('UPDATE users SET first_name = ?, last_name = ? WHERE user_id = ?', [
+        req.body.first_name,
+        req.body.last_name,
+        req.body.user_id
+    ], function (error, results, fields) {
+        if (error) {
+            res.json({ message: error });
+        }
+
+        res.json(results);
+    });
+});
+
+/**
+ * DELETE Operation
+ */
+
+app.delete('/users', function (req, res) {
+    connection.query('DELETE FROM users WHERE user_id = ?', [
+        req.body.user_id
+    ], function (error, results, fields) {
+        if (error) {
+            res.json({ message: error });
+        }
+
+        res.json(results);
+    });
 });
 
 // When a route doesn't exist, show the requester this message
