@@ -1,15 +1,20 @@
 const databaseConfig = {
     development: {
         host: 'localhost',
-        user: 'root',
+        username : 'root',
         password: '',
-        database: 'rest-api'
+        database: 'rest-api',
+        dialect: 'mysql',
+        define: {
+            timestamps: false
+        }
     },
     production: {
         host: 'localhost-prod',
-        user: 'root',
+        username: 'root',
         password: '',
-        database: 'rest-api'
+        database: 'rest-api',
+        dialect: 'mysql'
     }
 };
 
